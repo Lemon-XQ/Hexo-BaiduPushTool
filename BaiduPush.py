@@ -1,4 +1,9 @@
 # -*- coding:utf-8 -*-
+import sys
+reload(sys)
+
+sys.setdefaultencoding('utf8')
+import platform
 import os
 import string
 import urllib2
@@ -17,7 +22,6 @@ class BlogURLSpider:
 		self.blogURL = url
 		self.blogTheme = theme
 		self.datas = []
-		print u'爬虫启动……'
 
 	def hexo(self):
 		url = self.blogURL + "/archives"
@@ -41,18 +45,18 @@ class BlogURLSpider:
 		if(result):
 			pageNum = int(result[-1])
 		else:
-			pageNum = 1 # 只有一页时url为/archives，没有page
+			pageNum = 1 # if there is only one page, url is /archives instead of /archives/page/1
 
-		print u"[+] Find: 一共 %d 页" % pageNum
+		print "[+] PageCount : %d" % pageNum
 
 		return pageNum
 
 	def findData(self,blogurl,pageNum):
-		file = open('urls.txt','w+') # 写入urls.txt文件
+		file = open('urls.txt','w+') # Write into urls.txt
 		articleCount = 0
 
 		for i in range(1,pageNum+1):
-			print u"[+] 爬取第 %d 页中……" % i
+			print "[+] Reading Page %d..." % i
 
 			if(i == 1):
 				url = blogurl + "/archives"
@@ -70,21 +74,20 @@ class BlogURLSpider:
 
 			mypage = urllib2.urlopen(request).read().decode("utf-8")
 
-			pattern = re.compile(themeTags[self.blogTheme])
-			# articleUrls = pattern.findall(mypage)
 			articleUrls = re.findall(themeTags[self.blogTheme],mypage,re.S)
 
 			if(articleUrls):
 				for articleUrl in articleUrls:
-					# print type(articleUrl)
 					if(type(articleUrl) == tuple):
 						_articleUrl = articleUrl[0] 
 						self.datas.append(self.blogURL + _articleUrl + "\n")
-						print _articleUrl
+						print _articleUrl.decode('utf-8')
 					else:
 						self.datas.append(self.blogURL + articleUrl + "\n")
-						print articleUrl
-					
+						if(platform.system() =="Windows"):
+						    print articleUrl.decode('utf-8')
+						elif(platform.system() == "Linux"):
+						    print articleUrl.encode('utf-8')
 					articleCount = articleCount + 1
 					
 			else:
@@ -94,18 +97,18 @@ class BlogURLSpider:
 			file.write(data.encode('utf-8'))
 		file.close()
 
-		print u'[+] 生成 urls.txt 成功！共 %d 条记录' % articleCount
+		print '[+] Generate urls.txt Success! Total Records: %d ' % articleCount
 
-# URL校验
+# URL Fromat Check
 def checkURLValid(url):
-	# http或https开头，其后为A.B格式，A可以为-、字母、数字，B为字母、数字
+	# Begin with http or https, like http://lemonxq.cn
 	result = re.search('https?://[a-zA-Z0-9-]+(\.[a-zA-Z0-9]+)+$',url)
 	if(result):
 		return True
 	else:
 		return False
 
-# 读取配置文件中的博客URL
+# Read infos from _urlconfig.yml
 file = open('_urlconfig.yml','r')
 config = yaml.load(file)
 url = config['URL']
@@ -116,10 +119,9 @@ curl_cmd = "curl -H 'Content-Type:text/plain' --data-binary @urls.txt " + "\"" +
 if(checkURLValid(url) and api != None):
 	spider = BlogURLSpider(url,theme)
 	spider.hexo()
-	print u'[+] 开始主动推送至百度……'
+	print '[+] Begin pushing urls to baidu...'
 	os.system(curl_cmd)
-	print u'\n[+] 推送完成'
+	print '\n[+] Push Complete'
 else:
-	print u"[-] 请在 _urlconfig.yml 中填入相关配置信息"
-
+	print "[-] Please input your infos in _urlconfig.yml "
 

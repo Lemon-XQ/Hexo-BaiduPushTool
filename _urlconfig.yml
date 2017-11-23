@@ -1,6 +1,6 @@
-﻿# URL——Hexo博客地址
-# Theme——Hexo当前使用的主题，目前支持的主题：Next|Yelee|Jacman|Apollo
-# API——百度站长平台提供主动推送接口，获取方式：http://ziyuan.baidu.com/linksubmit/index
+﻿# URL: Your Hexo Blog URL
+# Theme: Next|Yelee|Jacman|Apollo
+# API: Get it from：http://ziyuan.baidu.com/linksubmit/index
 # Example:
 # URL: http://lemonxq.cn
 # Theme: Next
