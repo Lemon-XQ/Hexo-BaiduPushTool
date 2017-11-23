@@ -9,8 +9,8 @@
 
 ## 步骤
 ### Windows：
-- 直接在[我的项目主页](https://github.com/Lemon-XQ/Hexo-BaiduPushTool) **download zip** 或者** git bash**下执行`git clone https://github.com/Lemon-XQ/Hexo-BaiduPushTool.git`
-- 打开**_urlconfig.yml**，填入你的**博客地址、使用主题、百度主动推送接口**，保存
+- 直接在[我的项目主页](https://github.com/Lemon-XQ/Hexo-BaiduPushTool) **download zip** 或者**git bash**下执行`git clone https://github.com/Lemon-XQ/Hexo-BaiduPushTool.git`
+- 打开_urlconfig.yml，填入你的**博客地址、使用主题、百度主动推送接口**，保存
 - 双击**baidupush.bat**文件，等待推送完成
 
 ### Linux：
@@ -22,4 +22,4 @@
 ### 效果预览
 ![](http://okwl1c157.bkt.clouddn.com/baidupush_linux.png)
 ### 注意
-填写配置文件时，请注意yaml语法！即**URL:**后需加一个空格！否则会报错
+填写配置文件时，请注意yaml语法！即`URL:`后需加一个空格！否则会报错
