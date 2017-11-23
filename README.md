@@ -8,5 +8,6 @@
 - 在_urlconfig.yml中填写相应信息后保存
 - 双击baidupush.bat文件，执行推送
 ## Linux:
+- `git clone https://github.com/Lemon-XQ/Hexo-BaiduPushTool.git`
 - 在_urlconfig.yml中填写相应信息后保存
-- 终端执行 `python BaiduPush.py`
+- `python BaiduPush.py`
